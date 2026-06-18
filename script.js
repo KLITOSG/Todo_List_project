@@ -1,4 +1,4 @@
-const toDos = [];
+const toDos = [{dueDate:''}];
 
 rendertoDoList();
 function rendertoDoList() {
@@ -10,7 +10,11 @@ function rendertoDoList() {
     const html = `
     <p>
      ${todostuff}
-      <button>
+      <button onclick="
+        toDos.splice(${i}, 1);
+
+        rendertoDoList();
+      ">
         Delete
       </button>
     </p>
