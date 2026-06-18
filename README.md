@@ -6,16 +6,14 @@ A responsive task management application built to help users create, schedule, a
 
 - Add todo items with a task name and due date
 - Remove completed or unwanted tasks
-- Save the todo list in the browser with `localStorage`
 - Responsive layout for desktop, tablet, and mobile screens
-- jQuery-powered event handling and dynamic DOM updates
+- JavaScript-powered DOM rendering and user interaction
 
 ## Technologies Used
 
 - HTML5 for page structure and form controls
 - CSS3 for layout, centering, responsive design, and visual styling
-- JavaScript for todo list logic and browser storage
-- jQuery for event handling and interface updates
+- JavaScript for todo list logic, DOM rendering, and user interaction
 - Git and GitHub for version control
 
 ## Live Demo

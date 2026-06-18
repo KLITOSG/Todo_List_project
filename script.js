@@ -1,107 +1,56 @@
-const storageKey = 'todo-list-items';
-let toDos = loadTodos();
+const toDos = [];
 
-$(document).ready(function () {
-  rendertoDoList();
+rendertoDoList();
 
-  $('.todoForm').on('submit', function (event) {
-    event.preventDefault();
-    btn('Add');
-  });
-
-  $('.todoListJs').on('click', '.deleteCss', function () {
-    const index = Number($(this).data('index'));
-
-    toDos.splice(index, 1);
-    saveTodos();
-    rendertoDoList();
-  });
+document.querySelector('.todoForm').addEventListener('submit', function (event) {
+  event.preventDefault();
+  btn('Add');
 });
 
-function loadTodos() {
-  const savedTodos = localStorage.getItem(storageKey);
-
-  if (!savedTodos) {
-    return [];
-  }
-
-  try {
-    const parsedTodos = JSON.parse(savedTodos);
-
-    if (!Array.isArray(parsedTodos)) {
-      return [];
-    }
-
-    return parsedTodos.map(function (todo) {
-      return {
-        name: todo.name || '',
-        date: todo.date || '',
-      };
-    });
-  } catch (error) {
-    return [];
-  }
-}
-
-function saveTodos() {
-  localStorage.setItem(storageKey, JSON.stringify(toDos));
-}
-
 function rendertoDoList() {
-  const todoList = $('.todoListJs');
+  let todoListHTML = '';
 
-  todoList.empty();
+  for (let i = 0; i < toDos.length; i++) {
+    const todostuff = toDos[i];
+    const {name, date} = todostuff;
 
-  if (toDos.length === 0) {
-    $('<p>')
-      .addClass('emptyState')
-      .text('No tasks yet.')
-      .appendTo(todoList);
-    return;
+    const html = `
+      <div class="todoName">
+        ${name}
+      </div>
+
+      <div class="todoDate">
+        ${date}
+      </div>
+
+      <button class="deleteCss" onclick="
+        toDos.splice(${i}, 1);
+        rendertoDoList();
+      ">
+        Delete
+      </button>
+    `;
+
+    todoListHTML += html;
   }
 
-  toDos.forEach(function (todo, index) {
-    $('<div>')
-      .addClass('todoName')
-      .text(todo.name || 'Untitled task')
-      .appendTo(todoList);
-
-    $('<div>')
-      .addClass('todoDate')
-      .text(todo.date || 'No date')
-      .appendTo(todoList);
-
-    $('<button>')
-      .addClass('deleteCss')
-      .attr('type', 'button')
-      .data('index', index)
-      .text('Delete')
-      .appendTo(todoList);
-  });
+  document.querySelector('.todoListJs')
+    .innerHTML = todoListHTML;
 }
 
 function btn(add) {
-  const inputVal = $('.inputJs');
-  const dateInput = $('.dateJs');
+  const inputVal = document.querySelector('.inputJs');
+  const dateInput = document.querySelector('.dateJs');
 
   if (add === 'Add') {
-    const name = inputVal.val().trim();
-    const date = dateInput.val();
-
-    if (!name) {
-      inputVal.focus();
-      return;
-    }
-
     toDos.push({
-      name: name,
-      date: date,
+      name: inputVal.value,
+      date: dateInput.value,
     });
-
-    saveTodos();
   }
 
-  inputVal.val('');
-  dateInput.val('');
+  inputVal.value = '';
+  dateInput.value = '';
+
   rendertoDoList();
 }
