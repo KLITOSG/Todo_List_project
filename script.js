@@ -7,19 +7,25 @@ function rendertoDoList() {
   for(let i = 0; i < toDos.length; i++){
 
     const todostuff = toDos[i];
-    const {name, dueDate} =   todostuff;
+    const {name, date} =  todostuff;
    
     const html = `
-    <p>
-     ${name} ${dueDate}
-      <button onclick="
-        toDos.splice(${i}, 1);
+     <div class="nameCss"> 
+       ${name} 
+     </div>
 
-        rendertoDoList();
-      ">
-        Delete
-      </button>
-    </p>
+     <div class="dateCss">
+       ${date}
+     </div>
+
+     <button class = "deleteCss"  
+        onclick="
+          toDos.splice(${i}, 1);
+          rendertoDoList();
+        ">
+          Delete
+     </button>
+      
     `
     todoListHTML += html;
   }

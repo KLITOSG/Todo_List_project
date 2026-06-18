@@ -1,3 +1,35 @@
-.body{
+body{
   font-family: Arial, Helvetica, sans-serif;
+}
+.todoGrid,
+.todoInputGrid{
+  display: grid;grid-template-columns: 200px 150px 100px;
+  column-gap: 20px;
+  row-gap: 20px;
+  align-items: center;
+}
+.todoInputGrid{
+  margin-bottom: 10px;
+  align-items: stretch;
+}
+.inputCss,
+.dateCss{
+  font-size: 15px;
+  padding: 6px;
+}
+.addCss,
+.deleteCss {
+  padding: 10px;
+}
+.addCss{
+  background-color: green;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+.deleteCss {
+ background-color: darkred;
+ color: white;
+ border: none;
+ cursor: pointer;
 }
