@@ -7,7 +7,14 @@ function rendertoDoList() {
   for(let i = 0; i < toDos.length; i++){
 
     const todostuff = toDos[i];
-    const html = `<p>${todostuff}<button>Delete</button></p>`
+    const html = `
+    <p>
+     ${todostuff}
+      <button>
+        Delete
+      </button>
+    </p>
+    `
     todoListHTML += html;
   }
 
