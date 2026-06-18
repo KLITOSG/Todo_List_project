@@ -1,54 +1,107 @@
-const toDos = [];
+const storageKey = 'todo-list-items';
+let toDos = loadTodos();
 
-rendertoDoList();
-function rendertoDoList() {
-  let todoListHTML = '';
+$(document).ready(function () {
+  rendertoDoList();
 
-  for(let i = 0; i < toDos.length; i++){
+  $('.todoForm').on('submit', function (event) {
+    event.preventDefault();
+    btn('Add');
+  });
 
-    const todostuff = toDos[i];
-    const {name, date} =  todostuff;
-   
-    const html = `
-     <div class="nameCss"> 
-       ${name} 
-     </div>
+  $('.todoListJs').on('click', '.deleteCss', function () {
+    const index = Number($(this).data('index'));
 
-     <div class="dateCss">
-       ${date}
-     </div>
+    toDos.splice(index, 1);
+    saveTodos();
+    rendertoDoList();
+  });
+});
 
-     <button class = "deleteCss"  
-        onclick="
-          toDos.splice(${i}, 1);
-          rendertoDoList();
-        ">
-          Delete
-     </button>
-      
-    `
-    todoListHTML += html;
+function loadTodos() {
+  const savedTodos = localStorage.getItem(storageKey);
+
+  if (!savedTodos) {
+    return [];
   }
 
-  document.querySelector('.todoListJs')
-    .innerHTML = todoListHTML;
+  try {
+    const parsedTodos = JSON.parse(savedTodos);
+
+    if (!Array.isArray(parsedTodos)) {
+      return [];
+    }
+
+    return parsedTodos.map(function (todo) {
+      return {
+        name: todo.name || '',
+        date: todo.date || '',
+      };
+    });
+  } catch (error) {
+    return [];
+  }
 }
 
-function btn (add) {
-  const inputVal = document.querySelector('.inputJs');
-  const dateInput = document.querySelector('.dateJs');
+function saveTodos() {
+  localStorage.setItem(storageKey, JSON.stringify(toDos));
+}
 
-  if(add === 'Add') {
+function rendertoDoList() {
+  const todoList = $('.todoListJs');
+
+  todoList.empty();
+
+  if (toDos.length === 0) {
+    $('<p>')
+      .addClass('emptyState')
+      .text('No tasks yet.')
+      .appendTo(todoList);
+    return;
+  }
+
+  toDos.forEach(function (todo, index) {
+    $('<div>')
+      .addClass('todoName')
+      .text(todo.name || 'Untitled task')
+      .appendTo(todoList);
+
+    $('<div>')
+      .addClass('todoDate')
+      .text(todo.date || 'No date')
+      .appendTo(todoList);
+
+    $('<button>')
+      .addClass('deleteCss')
+      .attr('type', 'button')
+      .data('index', index)
+      .text('Delete')
+      .appendTo(todoList);
+  });
+}
+
+function btn(add) {
+  const inputVal = $('.inputJs');
+  const dateInput = $('.dateJs');
+
+  if (add === 'Add') {
+    const name = inputVal.val().trim();
+    const date = dateInput.val();
+
+    if (!name) {
+      inputVal.focus();
+      return;
+    }
 
     toDos.push({
-      name: inputVal.value,
-      date: dateInput.value
-    })
-  }
-    
-    inputVal.value = '';
-    dateInput.value = '';
+      name: name,
+      date: date,
+    });
 
-    rendertoDoList();
-  
-  };
+    saveTodos();
+  }
+
+  inputVal.val('');
+  dateInput.val('');
+  rendertoDoList();
+}

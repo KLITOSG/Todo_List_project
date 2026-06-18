@@ -1,35 +1,157 @@
-body{
+* {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  display: grid;
+  place-items: center;
+  padding: 24px;
   font-family: Arial, Helvetica, sans-serif;
+  color: #172033;
+  background: #f4f7fb;
 }
+
+.appShell {
+  width: min(100%, 760px);
+}
+
+.todoApp {
+  padding: 28px;
+  background: #ffffff;
+  border: 1px solid #d8e2ef;
+  border-radius: 8px;
+  box-shadow: 0 18px 45px rgba(17, 24, 39, 0.12);
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: 32px;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
 .todoGrid,
-.todoInputGrid{
-  display: grid;grid-template-columns: 200px 150px 100px;
-  column-gap: 20px;
-  row-gap: 20px;
-  align-items: center;
-}
-.todoInputGrid{
-  margin-bottom: 10px;
+.todoInputGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 160px 110px;
+  gap: 12px;
   align-items: stretch;
 }
-.inputCss,
-.dateCss{
-  font-size: 15px;
-  padding: 6px;
+
+.todoInputGrid {
+  margin-bottom: 16px;
 }
+
+.inputCss,
+.dateCss,
+.todoName,
+.todoDate {
+  min-height: 44px;
+  width: 100%;
+  border: 1px solid #b8c4d3;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+.inputCss,
+.dateCss {
+  padding: 10px 12px;
+  background: #ffffff;
+}
+
+.todoName,
+.todoDate {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  background: #f8fafc;
+  overflow-wrap: anywhere;
+}
+
+.todoDate {
+  color: #475569;
+}
+
 .addCss,
 .deleteCss {
-  padding: 10px;
-}
-.addCss{
-  background-color: green;
+  min-height: 44px;
+  padding: 0 14px;
   color: white;
   border: none;
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 700;
   cursor: pointer;
 }
+
+.addCss {
+  background-color: #15803d;
+}
+
 .deleteCss {
- background-color: darkred;
- color: white;
- border: none;
- cursor: pointer;
+  background-color: #b91c1c;
+}
+
+.addCss:hover {
+  background-color: #166534;
+}
+
+.deleteCss:hover {
+  background-color: #991b1b;
+}
+
+.emptyState {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 14px 12px;
+  color: #64748b;
+  background: #f8fafc;
+  border: 1px dashed #b8c4d3;
+  border-radius: 6px;
+}
+
+@media (max-width: 760px) {
+  body {
+    align-items: start;
+    padding: 16px;
+  }
+
+  .appShell {
+    margin-top: 24px;
+  }
+
+  .todoApp {
+    padding: 20px;
+  }
+
+  .todoGrid,
+  .todoInputGrid {
+    grid-template-columns: minmax(0, 1fr) 140px;
+  }
+
+  .addCss,
+  .deleteCss {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    padding: 12px;
+  }
+
+  .todoApp {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .todoGrid,
+  .todoInputGrid {
+    grid-template-columns: 1fr;
+  }
 }
