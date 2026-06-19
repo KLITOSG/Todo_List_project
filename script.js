@@ -1,4 +1,6 @@
-const toDos = [];
+const toDos = JSON.parse(localStorage.getItem('toDos')) || [];
+
+
 
 rendertoDoList();
 
@@ -25,11 +27,13 @@ function rendertoDoList() {
 
       <button class="deleteCss" onclick="
         toDos.splice(${i}, 1);
+        localStorage.setItem('toDos', JSON.stringify(toDos));
         rendertoDoList();
       ">
         Delete
       </button>
     `;
+    
 
     todoListHTML += html;
   }
@@ -48,6 +52,8 @@ function btn(add) {
       date: dateInput.value,
     });
   }
+
+  localStorage.setItem('toDos', JSON.stringify(toDos));
 
   inputVal.value = '';
   dateInput.value = '';
