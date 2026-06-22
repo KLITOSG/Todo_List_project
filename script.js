@@ -11,9 +11,9 @@ document.querySelector('.todoForm').addEventListener('submit', function (event) 
 
 function rendertoDoList() {
   let todoListHTML = '';
+  
+  toDos.forEach(function(todostuff, index ) {
 
-  for (let i = 0; i < toDos.length; i++) {
-    const todostuff = toDos[i];
     const {name, date} = todostuff;
 
     const html = `
@@ -26,7 +26,7 @@ function rendertoDoList() {
       </div>
 
       <button class="deleteCss" onclick="
-        toDos.splice(${i}, 1);
+        toDos.splice(${index}, 1);
         localStorage.setItem('toDos', JSON.stringify(toDos));
         rendertoDoList();
       ">
@@ -36,8 +36,8 @@ function rendertoDoList() {
     
 
     todoListHTML += html;
-  }
-
+  });
+  
   document.querySelector('.todoListJs')
     .innerHTML = todoListHTML;
 }
